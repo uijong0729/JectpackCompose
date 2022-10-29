@@ -3,16 +3,18 @@ package com.example.jetpackcompose
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -29,7 +31,20 @@ class MainActivity : ComponentActivity() {
                 ) {
                     // Compose Layout 참고
                     // https://developer.android.com/jetpack/compose/layout
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+                    Column(
+                        horizontalAlignment = Alignment.CenterHorizontally,
+                        modifier = Modifier.padding(20.dp)
+                    ) {
+                        // 사진
+                        Image(
+                            painter = painterResource(id = R.drawable.capture),     // 사진 리소스
+                            contentDescription = "프로필 사진",                        // 사진이 보이지 않는 사람들을 위한 텍스트
+                            modifier = Modifier
+                                        .size(100.dp)                       // 이미지 크기 조절
+                                        .clip(RoundedCornerShape(10.dp))    // 이미지 모서리 둥글게
+                        )
+                        Spacer(modifier = Modifier.height(20.dp))
+                        
                         // 텍스트를 표시하는 Compose
                         Text(
                             text = "User Name",
@@ -45,6 +60,7 @@ class MainActivity : ComponentActivity() {
                             modifier = Modifier.height(20.dp)
                         )
 
+                        // 직업표시 Compose
                         Text(text = "Job", color = Color.Gray, fontSize = 16.sp)
                     }
 
