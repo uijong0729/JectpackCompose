@@ -40,10 +40,10 @@ class MainActivity : ComponentActivity() {
                             painter = painterResource(id = R.drawable.capture),     // 사진 리소스
                             contentDescription = "프로필 사진",                        // 사진이 보이지 않는 사람들을 위한 텍스트
                             modifier = Modifier
-                                        .size(100.dp)                       // 이미지 크기 조절
-                                        .clip(RoundedCornerShape(10.dp))    // 이미지 모서리 둥글게
+                                .size(100.dp)                       // 이미지 크기 조절
+                                .clip(RoundedCornerShape(10.dp))    // 이미지 모서리 둥글게
                         )
-                        Spacer(modifier = Modifier.height(20.dp))
+                        Spacer(modifier = Modifier.height(15.dp))
                         
                         // 텍스트를 표시하는 Compose
                         Text(
@@ -57,11 +57,25 @@ class MainActivity : ComponentActivity() {
                         Spacer(
                             // Modifier 참고 (UI 컴포넌트에 부가효과를 추가)
                             // https://developer.android.com/jetpack/compose/modifiers
-                            modifier = Modifier.height(20.dp)
+                            modifier = Modifier.height(15.dp)
                         )
 
                         // 직업표시 Compose
-                        Text(text = "Job", color = Color.Gray, fontSize = 16.sp)
+                        Text(text = "Engineer", color = Color.Gray, fontSize = 16.sp)
+
+                        // 회사 정보
+                        Spacer(modifier = Modifier.height(15.dp))
+                        Column(
+                            horizontalAlignment = Alignment.Start,    // 왼쪽 정렬
+                            modifier = Modifier.fillMaxWidth()        // 컬럼 100% 채우기
+                        ) {
+                            // 회사명
+                            Text(text = "CAP", fontSize = 26.sp, fontWeight = FontWeight.Bold)
+                            Spacer(modifier = Modifier.height(9.dp))
+
+                            // 부서 그룹명
+                            Text(text = "System Solution", fontSize = 16.sp, color = Color.Gray)
+                        }
                     }
 
                 }
