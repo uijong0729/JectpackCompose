@@ -6,9 +6,9 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material.*
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Email
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -75,6 +75,21 @@ class MainActivity : ComponentActivity() {
 
                             // 부서 그룹명
                             Text(text = "System Solution", fontSize = 16.sp, color = Color.Gray)
+                            Spacer(modifier = Modifier.height(12.dp))
+                            // 이메일 표시
+                            // 가로로 요소 나열은 Row를 사용
+                            Row(verticalAlignment = Alignment.CenterVertically) {
+                                // 아이콘은 제트팩 컴포즈 기본 아이콘을 사용
+                                Icon(imageVector = Icons.Default.Email, contentDescription = "Email")
+                                Spacer(modifier = Modifier.width(10.dp))
+                                Text(text = "Email", fontSize = 14.sp, fontWeight = FontWeight.Bold)
+                            }
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(text = "EmailSample@mail.co.kr", fontSize = 16.sp)
+                            Spacer(modifier = Modifier.height(5.dp))
+
+                            // 둥글둥글한 구분선
+                            Divider(thickness = 2.dp, modifier = Modifier.clip(RoundedCornerShape(1000.dp)))
                         }
                     }
 
