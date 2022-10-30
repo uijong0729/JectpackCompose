@@ -1,19 +1,26 @@
 package com.example.jetpackcompose
 
+import android.icu.text.AlphabeticIndex.Bucket.LabelType
 import android.os.Bundle
+import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Email
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.LocationOn
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -44,7 +51,7 @@ class MainActivity : ComponentActivity() {
                                 .clip(RoundedCornerShape(10.dp))    // 이미지 모서리 둥글게
                         )
                         Spacer(modifier = Modifier.height(15.dp))
-                        
+
                         // 텍스트를 표시하는 Compose
                         Text(
                             text = "User Name",
@@ -78,23 +85,73 @@ class MainActivity : ComponentActivity() {
                             Spacer(modifier = Modifier.height(12.dp))
                             // 이메일 표시
                             // 가로로 요소 나열은 Row를 사용
-                            Row(verticalAlignment = Alignment.CenterVertically) {
-                                // 아이콘은 제트팩 컴포즈 기본 아이콘을 사용
-                                Icon(imageVector = Icons.Default.Email, contentDescription = "Email")
-                                Spacer(modifier = Modifier.width(10.dp))
-                                Text(text = "Email", fontSize = 14.sp, fontWeight = FontWeight.Bold)
-                            }
+                            Label(icon = Icons.Default.Email, text = "Email")
                             Spacer(modifier = Modifier.height(8.dp))
                             Text(text = "EmailSample@mail.co.kr", fontSize = 16.sp)
                             Spacer(modifier = Modifier.height(5.dp))
 
                             // 둥글둥글한 구분선
-                            Divider(thickness = 2.dp, modifier = Modifier.clip(RoundedCornerShape(1000.dp)))
+                            Divider(
+                                thickness = 2.dp,
+                                modifier = Modifier.clip(RoundedCornerShape(1000.dp))
+                            )
                         }
+
+                        Spacer(modifier = Modifier.height(15.dp))
+
+                        // 버튼표시
+                        Button(
+                            onClick = {
+                                Toast
+                                    .makeText(this@MainActivity, "button", Toast.LENGTH_LONG)
+                                    .show()
+                            },
+                            Modifier.fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(backgroundColor = Color(0xFFF85F6A))
+                        ) {
+                            Text(text = "Show more", color = Color.White)
+                        }
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        // 취미/거주지 표시
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .clip(RoundedCornerShape(10.dp))
+                                .background(Color.LightGray.copy(alpha = 0.3f)) // 투명도 30% 밝은 회색 배경
+                                .padding(horizontal = 10.dp, vertical = 20.dp)
+                        ) {
+                            Label(
+                                icon = Icons.Default.Favorite,
+                                text = "Programming",
+                                textColor = Color.Gray
+                            )
+                            Spacer(modifier = Modifier.height(10.dp))
+                            Label(
+                                icon = Icons.Default.LocationOn,
+                                text = "Tokyo",
+                                textColor = Color.Gray
+                            )
+                        }
+
                     }
 
                 }
             }
         }
+    }
+}
+
+@Composable
+fun Label(
+    icon: ImageVector,
+    text: String,
+    textColor: Color = MaterialTheme.colors.onBackground // 아무것도 지정안하면 기본 테마색을 적용
+) {
+    Row(verticalAlignment = Alignment.CenterVertically) {
+        Icon(icon, contentDescription = null)
+        Spacer(modifier = Modifier.width(10.dp))
+        Text(text = text, color = textColor, fontSize = 14.sp, fontWeight = FontWeight.Bold)
     }
 }
