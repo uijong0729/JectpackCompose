@@ -47,6 +47,7 @@ class MainActivity : ComponentActivity() {
                         )
                         // value : 값
                         // onValueChange : 콜백
+                        val inputText:String
                         TextField(
                             modifier = Modifier.fillMaxWidth(),
                             placeholder = { Text(text = "170") },
