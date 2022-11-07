@@ -1,6 +1,7 @@
 package com.example.bmicalculator
 
 import android.os.Bundle
+import android.widget.NumberPicker.OnValueChangeListener
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
@@ -40,26 +41,51 @@ class MainActivity : ComponentActivity() {
                         Spacer(modifier = Modifier.height(30.dp))
 
                         // 입력란 : 키
-                        Text(
-                            text = "신장(cm)",
-                            color = Color(0xFFF85F6A),
-                            fontWeight = FontWeight.Bold,
-                        )
-                        // value : 값
-                        // onValueChange : 콜백
-                        val inputText:String
-                        TextField(
-                            modifier = Modifier.fillMaxWidth(),
-                            placeholder = { Text(text = "170") },
+                        PinkLabelTextField(
                             value = "",
-                            onValueChange = { },
-                            colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.Transparent), // 입력란 투명
-                            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),          // 키보드 숫자
-                            singleLine = true,                                                              // 한 줄 입력란
-                        )
+                            onValueChange = {},
+                            label = "신장(cm)",
+                            placeHolder = "178.5")
+
+                        Spacer(modifier = Modifier.height(20.dp))
+
+                        // 입력란 : 체중
+                        PinkLabelTextField(
+                            value = "",
+                            onValueChange = {},
+                            label = "체중(kg)",
+                            placeHolder = "74.5")
                     }
                 }
             }
         }
+    }
+}
+
+@Composable
+fun PinkLabelTextField(
+    value: String,
+    onValueChange: ((String) -> Unit),
+    label: String,
+    placeHolder: String,
+) {
+    Column {
+
+        Text(
+            text = label,
+            color = Color(0xFFF85F6A),
+            fontWeight = FontWeight.Bold,
+        )
+        // value : 값
+        // onValueChange : 콜백
+        TextField(
+            modifier = Modifier.fillMaxWidth(),
+            placeholder = { Text(text = placeHolder) },
+            value = value,
+            onValueChange = onValueChange,
+            colors = TextFieldDefaults.textFieldColors(backgroundColor = Color.Transparent), // 입력란 투명
+            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),          // 키보드 숫자
+            singleLine = true,                                                              // 한 줄 입력란
+        )
     }
 }
