@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -55,6 +56,32 @@ class MainActivity : ComponentActivity() {
                             onValueChange = {},
                             label = "체중(kg)",
                             placeHolder = "74.5")
+
+                        Spacer(modifier = Modifier.height(30.dp))
+
+                        // 계산 버튼
+                        Button(
+                            onClick = {},
+                            modifier = Modifier.fillMaxWidth(),
+                            colors = ButtonDefaults.buttonColors(
+                                backgroundColor = Color(0xFFF85F6A)
+                            )
+                        ) {
+                            Text(text = "계산하기", color = Color.White, fontSize = 18.sp, fontWeight = FontWeight.Bold)
+                        }
+
+                        Spacer(modifier = Modifier.height(40.dp))
+
+                        // 계산 결과 표시
+                        Text(text = "당신의 BMI는 0.00입니다.",
+                            modifier = Modifier.fillMaxWidth(),
+                            textAlign = TextAlign.Center,
+                            color = Color.Gray,
+                            fontSize = 24.sp,
+                            fontWeight = FontWeight.ExtraBold
+                        )
+
+
                     }
                 }
             }
@@ -70,7 +97,6 @@ fun PinkLabelTextField(
     placeHolder: String,
 ) {
     Column {
-
         Text(
             text = label,
             color = Color(0xFFF85F6A),
