@@ -1,9 +1,11 @@
 package com.example.bmicalculator
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.NumberPicker.OnValueChangeListener
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.*
@@ -17,11 +19,17 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.ViewModel
 import com.example.bmicalculator.ui.theme.BMICalculatorTheme
 
 class MainActivity : ComponentActivity() {
+    // by 키워드를 사용하게 되면, 컴파일러가 자동으로 Delegate Pattern 코드를 작성
+    // by 키워드로 인해 viewModels<> 인터페이스의 각 함수들을 구현하지 않아도 사용할 수 있다.
+    private val viewModel by viewModels<MainViewModel>();
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
         setContent {
             BMICalculatorTheme {
                 // A surface container using the 'background' color from the theme
@@ -43,8 +51,12 @@ class MainActivity : ComponentActivity() {
 
                         // 입력란 : 키
                         PinkLabelTextField(
-                            value = "",
-                            onValueChange = {},
+                            value = viewModel.height,
+                            onValueChange = {
+                                // it : 유저가 입력한 값
+                                // 인수로 들어오는 변수가 한개인 경우 [it]으로 받을 수 있다.
+                                viewModel.height = it
+                            },
                             label = "신장(cm)",
                             placeHolder = "178.5")
 
@@ -52,8 +64,10 @@ class MainActivity : ComponentActivity() {
 
                         // 입력란 : 체중
                         PinkLabelTextField(
-                            value = "",
-                            onValueChange = {},
+                            value = viewModel.weight,
+                            onValueChange = {
+                                viewModel.weight = it
+                            },
                             label = "체중(kg)",
                             placeHolder = "74.5")
 
@@ -80,8 +94,6 @@ class MainActivity : ComponentActivity() {
                             fontSize = 24.sp,
                             fontWeight = FontWeight.ExtraBold
                         )
-
-
                     }
                 }
             }
