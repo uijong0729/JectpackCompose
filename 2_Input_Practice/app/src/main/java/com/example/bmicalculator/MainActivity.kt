@@ -23,6 +23,7 @@ import androidx.lifecycle.ViewModel
 import com.example.bmicalculator.ui.theme.BMICalculatorTheme
 
 class MainActivity : ComponentActivity() {
+
     // by 키워드를 사용하게 되면, 컴파일러가 자동으로 Delegate Pattern 코드를 작성
     // by 키워드로 인해 viewModels<> 인터페이스의 각 함수들을 구현하지 않아도 사용할 수 있다.
     private val viewModel by viewModels<MainViewModel>();
@@ -75,7 +76,9 @@ class MainActivity : ComponentActivity() {
 
                         // 계산 버튼
                         Button(
-                            onClick = {},
+                            onClick = {
+                                viewModel.calcBmi()
+                            },
                             modifier = Modifier.fillMaxWidth(),
                             colors = ButtonDefaults.buttonColors(
                                 backgroundColor = Color(0xFFF85F6A)
@@ -87,7 +90,7 @@ class MainActivity : ComponentActivity() {
                         Spacer(modifier = Modifier.height(40.dp))
 
                         // 계산 결과 표시
-                        Text(text = "당신의 BMI는 0.00입니다.",
+                        Text(text = "당신의 BMI는 ${viewModel.bmiResult}입니다.",
                             modifier = Modifier.fillMaxWidth(),
                             textAlign = TextAlign.Center,
                             color = Color.Gray,
