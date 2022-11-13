@@ -12,5 +12,6 @@ Jetpack test
 
 # 2_Input_Practice : 사용자 입출력 레퍼런스
 - ViewModel
+- viewModel by viewModels<>()
 - mutableStateOf
 - Button, onClick, onValueChange
