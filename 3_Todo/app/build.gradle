@@ -80,4 +80,7 @@ dependencies {
     def lifecycle_version = "2.5.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel:$lifecycle_version"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$lifecycle_version"
+
+    // 뷰모델
+    implementation "androidx.hilt:hilt-navigation-compose:1.0.0"
 }
