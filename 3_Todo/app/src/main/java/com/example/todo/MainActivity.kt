@@ -11,7 +11,10 @@ import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
+import com.example.todo.ui.components.EditDialog
 import com.example.todo.ui.theme.TodoTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -37,10 +40,17 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 fun mainContent(context: Context) {
+    // Main화면을 Resume해도 해당 변수는 초기화 되지 않도록 보관
+    val isShowDialog = remember { mutableStateOf(false) }
+    if (isShowDialog.value) {
+        EditDialog(isShowDialog)
+    }
+
     // 플로팅 액션버튼을 쓰기위한
     Scaffold(floatingActionButton = {
         FloatingActionButton(onClick = {
-            Toast.makeText(context, "onClick", Toast.LENGTH_LONG).show()
+            //Toast.makeText(context, "onClick", Toast.LENGTH_LONG).show()
+            isShowDialog.value = true
         }) {
             // UI
             Icon(imageVector = Icons.Default.Add, contentDescription = "신규작성")
