@@ -59,6 +59,7 @@ fun EditDialog(
                     modifier = Modifier.width(120.dp),
                     onClick = {
                         isShowDialog.value = false
+                        viewModel.createTask()
                     }
                 ) {
                     Text(text = "추가")
