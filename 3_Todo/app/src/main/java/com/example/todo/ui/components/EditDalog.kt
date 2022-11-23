@@ -14,7 +14,6 @@ import com.example.todo.ui.viewmodel.MainViewModel
 
 @Composable
 fun EditDialog(
-    isShowDialog :MutableState<Boolean>,
     viewModel: MainViewModel = hiltViewModel(), // 인수로는 dagger에 의해 자동으로 넘어 옴
 ) {
     // 대문자로 시작하지만 함수임
@@ -22,7 +21,7 @@ fun EditDialog(
     AlertDialog(
         onDismissRequest = {
             // 다이얼로그가 dismiss 되었을 경우
-            isShowDialog.value = false
+            viewModel.isShowDialog = false
         },
         title = { Text(text = "할 일 추가")},
         text = {
@@ -49,7 +48,7 @@ fun EditDialog(
                     modifier = Modifier.width(120.dp),
                     onClick = {
                         // 다이얼로그가 취소되었을 경우
-                        isShowDialog.value = false
+                        viewModel.isShowDialog = false
                     }
                 ) {
                     Text(text = "취소")
@@ -58,7 +57,7 @@ fun EditDialog(
                 Button(
                     modifier = Modifier.width(120.dp),
                     onClick = {
-                        isShowDialog.value = false
+                        viewModel.isShowDialog = false
                         viewModel.createTask()
                     }
                 ) {

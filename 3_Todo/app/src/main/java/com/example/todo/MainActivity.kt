@@ -10,12 +10,12 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.todo.ui.components.EditDialog
 import com.example.todo.ui.theme.TodoTheme
+import com.example.todo.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    mainContent(this@MainActivity)
+                    mainContent()
                 }
             }
         }
@@ -39,23 +39,26 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun mainContent(context: Context) {
+fun mainContent(viewModel: MainViewModel = hiltViewModel()) {
     // Main화면을 Resume해도 해당 변수는 초기화 되지 않도록 보관
-    val isShowDialog = remember { mutableStateOf(false) }
-    if (isShowDialog.value) {
-        EditDialog(isShowDialog)
+    // 액티비티 클래스에 이 변수를 선언해버리면, 화면을 회전시켰을때 변수가 초기화되므로 주의
+    // val isShowDialog = remember { mutableStateOf(false) }
+    if (viewModel.isShowDialog) {
+        EditDialog()
     }
 
     // 플로팅 액션버튼을 쓰기위한
     Scaffold(floatingActionButton = {
         FloatingActionButton(onClick = {
             //Toast.makeText(context, "onClick", Toast.LENGTH_LONG).show()
-            isShowDialog.value = true
+            viewModel.isShowDialog = true
         }) {
             // UI
             Icon(imageVector = Icons.Default.Add, contentDescription = "신규작성")
         }
     }) {
-
+        // Task정보
+        val tasks by viewModel.tasks.collectAsState(initial = emptyList())
+        Log.d("count tasks", tasks.size.toString())
     }
 }
