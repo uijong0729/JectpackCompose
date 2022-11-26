@@ -14,6 +14,7 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.todo.ui.components.EditDialog
+import com.example.todo.ui.components.TaskList
 import com.example.todo.ui.theme.TodoTheme
 import com.example.todo.ui.viewmodel.MainViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -60,5 +61,10 @@ fun mainContent(viewModel: MainViewModel = hiltViewModel()) {
         // Task정보
         val tasks by viewModel.tasks.collectAsState(initial = emptyList())
         Log.d("count tasks", tasks.size.toString())
+        TaskList(
+            tasks = tasks,
+            onClickRow = {},
+            onClickDelete = {}
+        )
     }
 }
