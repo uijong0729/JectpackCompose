@@ -64,7 +64,10 @@ fun mainContent(viewModel: MainViewModel = hiltViewModel()) {
         TaskList(
             tasks = tasks,
             onClickRow = {},
-            onClickDelete = {}
+            onClickDelete = {
+                // it : 람다식의 매개변수
+                viewModel.deleteTask(it)
+            }
         )
     }
 }
