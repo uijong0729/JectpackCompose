@@ -63,7 +63,10 @@ fun mainContent(viewModel: MainViewModel = hiltViewModel()) {
         Log.d("count tasks", tasks.size.toString())
         TaskList(
             tasks = tasks,
-            onClickRow = {},
+            onClickRow = {
+                viewModel.setEditingTask(it)
+                viewModel.isShowDialog = true
+            },
             onClickDelete = {
                 // it : 람다식의 매개변수
                 viewModel.deleteTask(it)
