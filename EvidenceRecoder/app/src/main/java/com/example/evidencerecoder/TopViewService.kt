@@ -26,8 +26,8 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.lifecycle.ViewTreeLifecycleOwner
 
 class TopViewService : AccessibilityService() {
-//    lateinit var iv :ImageView
-    lateinit var iv :View
+    //    lateinit var iv :ImageView
+    lateinit var iv: View
 
     override fun onAccessibilityEvent(p0: AccessibilityEvent?) {
         TODO("Not yet implemented")
@@ -65,7 +65,7 @@ class TopViewService : AccessibilityService() {
         iv = View(baseContext).apply {
             setBackgroundColor(Color.RED)
             layoutParams = LinearLayout.LayoutParams(300, 300)
-            setOnClickListener {
+            this.setOnClickListener {
                 Toast.makeText(baseContext, "Test", Toast.LENGTH_LONG).show()
             }
         }
@@ -95,9 +95,11 @@ class TopViewService : AccessibilityService() {
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun createNotificationChannel(channelId: String, channelName: String): String{
-        val chan = NotificationChannel(channelId,
-            channelName, NotificationManager.IMPORTANCE_NONE)
+    private fun createNotificationChannel(channelId: String, channelName: String): String {
+        val chan = NotificationChannel(
+            channelId,
+            channelName, NotificationManager.IMPORTANCE_NONE
+        )
         chan.lightColor = Color.BLUE
         chan.lockscreenVisibility = Notification.VISIBILITY_PRIVATE
         val service = getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
