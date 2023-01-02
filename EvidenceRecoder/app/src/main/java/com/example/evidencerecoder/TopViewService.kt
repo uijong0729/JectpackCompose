@@ -1,29 +1,23 @@
 package com.example.evidencerecoder
 
 import android.accessibilityservice.AccessibilityService
+import android.annotation.SuppressLint
 import android.app.*
-import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.Build
-import android.os.IBinder
 import android.view.Gravity
+import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
-import android.widget.ImageView
+import android.widget.Button
 import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.compose.foundation.Image
-import androidx.compose.material.Icon
-import androidx.compose.material.Text
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
-import androidx.compose.ui.platform.ComposeView
-import androidx.lifecycle.ViewTreeLifecycleOwner
 
 class TopViewService : AccessibilityService() {
     //    lateinit var iv :ImageView
@@ -62,30 +56,47 @@ class TopViewService : AccessibilityService() {
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
         super.onStartCommand(intent, flags, startId)
 
-        iv = View(baseContext).apply {
-            setBackgroundColor(Color.RED)
-            layoutParams = LinearLayout.LayoutParams(300, 300)
-            this.setOnClickListener {
-                Toast.makeText(baseContext, "Test", Toast.LENGTH_LONG).show()
+        iv = View(this@TopViewService).apply {
+            this.setBackgroundColor(Color.RED)
+            this.setOnTouchListener { view, motionEvent ->
+                when (motionEvent.action) {
+                    MotionEvent.ACTION_DOWN -> {
+                        view.performClick()
+                        Toast.makeText(baseContext, "Test", Toast.LENGTH_LONG).show()
+                        true
+                    }
+                    else -> {
+                        false
+                    }
+                }
             }
         }
+        val height = (resources.displayMetrics.heightPixels * 0.1).toInt()
+        val width = (resources.displayMetrics.widthPixels * 0.2).toInt()
 
         val param = WindowManager.LayoutParams(
-            150,
-            150,
+            width,
+            height,
             WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
             WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
             PixelFormat.TRANSLUCENT
         ).apply {
-            gravity = Gravity.LEFT or Gravity.TOP
+            gravity = Gravity.START or Gravity.TOP
             verticalMargin = 0.1f
             horizontalMargin = 0.1f
+
         }
 
         val windowManager = this.getSystemService(Context.WINDOW_SERVICE) as WindowManager
         windowManager.addView(iv, param)
 
         return Service.START_STICKY
+    }
+
+    override fun stopService(name: Intent?): Boolean {
+        val windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
+        windowManager.removeView(iv);
+        return super.stopService(name)
     }
 
     override fun onDestroy() {
