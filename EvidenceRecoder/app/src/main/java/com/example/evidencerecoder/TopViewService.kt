@@ -22,6 +22,8 @@ import androidx.annotation.RequiresApi
 class TopViewService : AccessibilityService() {
     //    lateinit var iv :ImageView
     lateinit var iv: View
+    lateinit var params: WindowManager.LayoutParams
+    lateinit var windowManager: WindowManager
 
     override fun onAccessibilityEvent(p0: AccessibilityEvent?) {
         TODO("Not yet implemented")
@@ -33,7 +35,6 @@ class TopViewService : AccessibilityService() {
 
     override fun onCreate() {
         super.onCreate()
-
         val channelId = createNotificationChannel("my_service", "My Background Service")
 
         // 포그라운드 서비스 알림
@@ -41,7 +42,6 @@ class TopViewService : AccessibilityService() {
             Intent(this, MainActivity::class.java).let { notificationIntent ->
                 PendingIntent.getActivity(this, 0, notificationIntent, 0)
             }
-
         val notification: Notification = Notification.Builder(this, channelId)
             .setContentTitle("getText(R.string.notification_title)")
             .setContentText("getText(R.string.notification_message)")
@@ -49,8 +49,25 @@ class TopViewService : AccessibilityService() {
             .setContentIntent(pendingIntent)
             .setTicker("getText(R.string.ticker_text)")
             .build()
-
         startForeground(101, notification)
+
+        windowManager = getSystemService(Context.WINDOW_SERVICE) as WindowManager
+        val height = (resources.displayMetrics.heightPixels * 0.1).toInt()
+        val width = (resources.displayMetrics.widthPixels * 0.2).toInt()
+        params = WindowManager.LayoutParams(
+            width,
+            height,
+            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
+            WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH
+                    or WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN
+                    or WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL
+                    or WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+            PixelFormat.TRANSLUCENT
+        ).apply {
+            gravity = Gravity.START or Gravity.TOP
+            verticalMargin = 0.1f
+            horizontalMargin = 0.1f
+        }
     }
 
     override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {
@@ -71,24 +88,8 @@ class TopViewService : AccessibilityService() {
                 }
             }
         }
-        val height = (resources.displayMetrics.heightPixels * 0.1).toInt()
-        val width = (resources.displayMetrics.widthPixels * 0.2).toInt()
 
-        val param = WindowManager.LayoutParams(
-            width,
-            height,
-            WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY,
-            WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH,
-            PixelFormat.TRANSLUCENT
-        ).apply {
-            gravity = Gravity.START or Gravity.TOP
-            verticalMargin = 0.1f
-            horizontalMargin = 0.1f
-
-        }
-
-        val windowManager = this.getSystemService(Context.WINDOW_SERVICE) as WindowManager
-        windowManager.addView(iv, param)
+        windowManager.addView(iv, params)
 
         return Service.START_STICKY
     }
