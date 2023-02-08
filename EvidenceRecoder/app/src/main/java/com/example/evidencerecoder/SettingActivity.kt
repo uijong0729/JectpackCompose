@@ -7,6 +7,8 @@ import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -52,6 +54,42 @@ class SettingActivity : ComponentActivity() {
                     Toast.makeText(this@SettingActivity, "test : $it", Toast.LENGTH_LONG).show()
                 })
             }
+
+            alertDialog()
         }
+    }
+
+    // ref: https://semicolonspace.com/jetpack-compose-dialog/
+    @Composable
+    fun alertDialog() {
+        AlertDialog(
+            onDismissRequest = { /*TODO*/ },
+            buttons = {
+                Column(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Button(onClick = {
+
+                    }) {
+                        Text(text = "Confirm")
+                    }
+                    Button(onClick = {
+
+                    }) {
+                        Text(text = "Dismiss")
+                    }
+                }
+            },
+            title = {
+                Text(text = "Title")
+            },
+            text = {
+                Text(text = "Description")
+            },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(32.dp)
+        )
     }
 }
