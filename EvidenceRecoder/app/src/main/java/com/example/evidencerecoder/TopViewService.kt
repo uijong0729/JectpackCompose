@@ -1,7 +1,6 @@
 package com.example.evidencerecoder
 
 import android.accessibilityservice.AccessibilityService
-import android.annotation.SuppressLint
 import android.app.*
 import android.content.Context
 import android.content.Intent
@@ -9,13 +8,10 @@ import android.graphics.Color
 import android.graphics.PixelFormat
 import android.os.Build
 import android.view.Gravity
-import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
-import android.widget.Button
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.annotation.RequiresApi
 
@@ -77,9 +73,19 @@ class TopViewService : AccessibilityService() {
             this.setBackgroundColor(Color.RED)
             this.setOnTouchListener { view, motionEvent ->
                 when (motionEvent.action) {
+                    // 처음 눌렀을 때
                     MotionEvent.ACTION_DOWN -> {
                         view.performClick()
                         Toast.makeText(baseContext, "Test", Toast.LENGTH_LONG).show()
+                        true
+                    }
+                    // 누른 뒤 끌었을 때
+                    MotionEvent.ACTION_MOVE -> {
+                        Toast.makeText(
+                            baseContext,
+                            "x : $motionEvent.x / y : $motionEvent.y",
+                            Toast.LENGTH_SHORT
+                        ).show()
                         true
                     }
                     else -> {
